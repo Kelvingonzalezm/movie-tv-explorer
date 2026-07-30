@@ -1,19 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Movie & TV Explorer helps users discover movies and TV shows, search for content, watch trailers, and save favorites.">
-  <title>Movie & TV Explorer</title>
-  <link rel="stylesheet" href="/src/css/style.css" />
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Movie & TV Explorer helps users discover movies and TV shows, search for content, watch trailers, and favorites.">
+    <title>Home - Movie & TV Explorer</title>
+    <link rel="stylesheet" href="/src/css/style.css">
+  </head>
 
-<body>
-  <div id="app"></div>
+  <body>
+    <header>
+      <h1>Movie & TV Explorer</h1>
 
-  <script type="module" src="/src/js/main.js"></script>
-</body>
+      <nav>
+        <a href="/movie-tv-explorer/">Home</a>
+        <a href="movie-tv-exxplorer/src/pages/search.html">Search</a>
+        <a href="movie-tv-explorer/src/pages/favorites.html">Favorites</a>
+      </nav>
+    </header>
+
+    <main>
+      <section>
+        <h2>Discover Movies & TV Shows</h2>
+        <p>Find something new to watch.</p>
+      </section>
+
+      <section>
+        <h2>Discover</h2>
+
+        <div id="discover-content">
+          <!-- Movies and TV shows will be displayed here -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Movie & TV Explorer</p>
+    </footer>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
 
 </html>
