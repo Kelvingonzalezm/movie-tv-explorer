@@ -23,7 +23,7 @@ function addCardEvents(containerId) {
             const id = card.dataset.id;
             const type = card.dataset.type;
 
-            window.location.href = `/movie-tv-explorer/details.html?id=${id}&type=${type}`;
+            window.location.href = `/movie-tv-explorer/src/pages/details.html?id=${id}&type=${type}`;
         });
     });
 }
