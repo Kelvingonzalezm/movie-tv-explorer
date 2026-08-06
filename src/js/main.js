@@ -1,19 +1,9 @@
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+import { getTrendingContent, searchContent } from "./api.js";
+import { displayCards } from "./display.js";
 
-const BASE_URL = 'https://api.themoviedb.org/3';
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
-
-async function getTrendingContent() {
+async function loadTrending() {
     try {
-        const response = await fetch(
-            `${BASE_URL}/trending/all/day?api_key=${API_KEY}`
-        );
-
-        if (!response.ok) {
-            throw new Error(`TMDB API Error: ${response.status}`);
-        }
-
-        const data = await response.json();
+        const data = await getTrendingContent();
 
         console.log('TMDB results:', data.results);
 
@@ -30,45 +20,48 @@ async function getTrendingContent() {
             `;
         }
     }
-} 
-
-function displayCards(items) {
-    const container = document.querySelector('#discover-content');
-
-    if (!container) {
-        console.error('Discover content container not found.');
-        return;
-    }
-
-    container.innerHTML = items
-        .map(item => createCard(item))
-        .join('');
 }
 
-function createCard(item) {
-    const title = item.title || item.name || 'Unknown Title';
-    const date = item.release_date || item.first_air_date || 'N/A';
-    const type = item.media_type === 'movie' ? 'Movie' : 'TV Show';
+const discoverContainer = document.querySelector('#discover-content');
 
-    const image = item.poster_path
-        ? `${IMAGE_BASE_URL}${item.poster_path}`
-        : '';
-    
-    return `
-        <article class="movie-card">
-            ${image
-            ? `<img src="${image}" alt="${title} poster">`
-            : `<div class="no-image">No image available</div>`
+if (discoverContainer) {
+    loadTrending();
+}
+
+const searchForm = document.querySelector('#search-form');
+
+if (searchForm) {
+    searchForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const searchInput = document.querySelector('#search-input');
+        const query = searchInput.value.trim();
+
+        if (query) {
+
+            const title = document.querySelector('#search-title');
+            
+            if (title) {
+                title.textContent = `Search Results for "${query}"`;
+            }
+
+            try {
+                const data = await searchContent(query);
+
+                console.log('Search results:', data.results);
+
+                displayCards(data.results, '#search-results');
+            } catch (error) {
+                console.error('Error searching TMDB:', error);
+
+                const container = document.querySelector('#search-results');
+
+                if (container) {
+                    container.innerHTML = `
+                        <p>Unable to search movies and TV shows.</p>
+                    `;
+                }
+            }
         }
-
-            <div class="card-content">
-                <h3>${title}</h3>
-                <p>Rating: ${item.vote_average.toFixed(1)}</p>
-                <p>Type: ${type}</p>
-                <p>Release Date: ${date}</p>
-            </div>
-        </article>
-    `;
+    });
 }
-
-getTrendingContent();
