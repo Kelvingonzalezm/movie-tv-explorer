@@ -11,7 +11,7 @@ export function displayCards(items, containerId = '#discover-content') {
     container.innerHTML = items
         .map(item => createCard(item))
         .join('');
-    
+
     addCardEvents(containerId);
 }
 
@@ -23,7 +23,7 @@ function addCardEvents(containerId) {
             const id = card.dataset.id;
             const type = card.dataset.type;
 
-            window.location.href = `/movie-tv-explorer/src/pages/details.html?id=${id}&type=${type}`;
+            window.location.href = `/movie-tv-explorer/details.html?id=${id}&type=${type}`;
         });
     });
 }
